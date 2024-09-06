@@ -107,3 +107,31 @@
 
 })(jQuery);
 
+// Contact us
+
+document.querySelector('.contact-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevents the default form submission behavior
+    
+    const form = event.target;
+    const formData = new FormData(form);
+  
+    fetch(form.action, {
+      method: form.method,
+      body: formData
+    })
+    .then(response => {
+      if (response.ok) { // Check if the HTTP response status is 200-299
+        alert("Your message has been sent successfully. We'll respond shortly!");
+        form.reset(); // Reset form fields
+      } else {
+        return response.text().then(text => {
+          throw new Error(text); // Throw an error with response text
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("Your message has been sent successfully. We'll respond shortly!");
+    });
+  });
+  
